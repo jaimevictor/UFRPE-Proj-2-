@@ -1,11 +1,7 @@
-import itertools
-
-
-def format_input(q_line, q_column):
+def format_input(q_line):
     points = {}
     for i in range(q_line):  # Recebe a quantidade correta de linhas
         line = list(map(str, input().split()))  # Põe tudo numa lista
-        # assert len(line) > q_column, "ERRO: Mais linhas do que deveria"  # Tratamento pra erro de digitação
         a = len(line)
         for j in range(len(line)):  # Percorre a linha pra adicionar no dicionario
             if line[j] != '0':
@@ -13,10 +9,22 @@ def format_input(q_line, q_column):
     return points
 
 
+def permutations(points):
+    if len(points) == 1:
+        return [points]
+    final_list = []
+    for index, i in enumerate(points):
+        points_left = points[:index] + points[index+1:]
+        z = permutations(points_left)
+        for t in z:
+            final_list.append([i] + t)
+    return final_list
+
+
 def routing(points):  # Permuta todos os pontos
     del points['R']  # Remove o inicio temporariamente da conta
     points = list(item for item in points)
-    permutation = itertools.permutations(points)
+    permutation = permutations(points)
     routes = ['R' + "".join(route) + 'R' for route in permutation]  # Adiciona ao fim e começo de cada rota permutada
     return routes
 
@@ -34,7 +42,7 @@ def calculate_route(route, allpoints):  # Calcula o custo da rota recebida
 
 while True:
     q_line, q_column = list(map(int, input().split()))
-    all_points = format_input(q_line, q_column)
+    all_points = format_input(q_line)
     all_routes = routing(all_points.copy())
     route_cost = [0] * len(all_routes)
     for i in range(len(all_routes)):
