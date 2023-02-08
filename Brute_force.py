@@ -1,11 +1,10 @@
 def format_input(q_line):
     points = {}
-    for i in range(q_line):  # Recebe a quantidade correta de linhas
+    for n in range(q_line):  # Recebe a quantidade correta de linhas
         line = list(map(str, input().split()))  # Põe tudo numa lista
-        a = len(line)
         for j in range(len(line)):  # Percorre a linha pra adicionar no dicionario
             if line[j] != '0':
-                points[line[j]] = (i, j)
+                points[line[j]] = (n, j)
     return points
 
 
@@ -13,11 +12,11 @@ def permutations(points):
     if len(points) == 1:
         return [points]
     final_list = []
-    for index, i in enumerate(points):
+    for index, m in enumerate(points):
         points_left = points[:index] + points[index+1:]
         z = permutations(points_left)
         for t in z:
-            final_list.append([i] + t)
+            final_list.append([m] + t)
     return final_list
 
 
