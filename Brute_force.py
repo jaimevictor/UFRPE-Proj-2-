@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import time
+
 def format_input(q_line):
     points = {}
     for n in range(q_line):  # Recebe a quantidade correta de linhas
@@ -39,6 +43,50 @@ def calculate_route(route, allpoints):  # Calcula o custo da rota recebida
     return cost
 
 
+def plot_route(route, allpoints):
+    X = []
+    Y = []
+    route_size = len(route)-1
+    for k in range(route_size):
+        actual_point = route[k]
+        next_point = route[k+1]
+        actual_point = allpoints.get(actual_point)  # Recolhe os valores do ponto atual
+        next_point = allpoints.get(next_point)  # recolhe os valores do prox ponto
+        X.append(actual_point[1]) # adicionando ponto atual
+        Y.append(actual_point[0]) # adicionando ponto atual
+        X.append(actual_point[1]) # adicionando ponto de conexão
+        Y.append(next_point[0]) # adicionando ponto de conexão
+        if k == route_size:
+            X.append(next_point[1]) # adicionando ponto de final
+            Y.append(next_point[0]) # adicionando ponto de final
+
+    X = np.array(X)
+    Y = np.array(Y)
+    return X, Y
+
+
+def create_graph (route, all_points):
+
+    x_axis, y_axis = plot_route(route, all_points) # The axis
+    graph, (plot1) = plt.subplots(1) #
+    plot1.plot(x_axis, y_axis, "-o") # the plot itself
+    plot1.invert_yaxis()             #
+    # beautify
+
+    plot1.set_title("Best Route")
+    plt.xlabel("X axis")
+    plt.ylabel("Y axis")
+    plt.grid()
+
+    for b in all_points:
+        point = all_points[b]
+        x = point[1]
+        y = point[0]
+        plt.text(x, y, b, horizontalalignment='right')
+
+    plt.show()
+
+
 while True:
     q_line, q_column = list(map(int, input().split()))
     all_points = format_input(q_line)
@@ -50,3 +98,4 @@ while True:
     lowest_cost = min(route_cost)  # Menor custo entre todas as rotas
     cheap_route = all_routes[route_cost.index(lowest_cost)]  # Pegar indice da lista do menor valor e recolher rota de mesmo indice
     print(cheap_route)
+    create_graph(cheap_route, all_points)
