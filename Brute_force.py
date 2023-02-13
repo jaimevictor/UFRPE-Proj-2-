@@ -59,7 +59,8 @@ def plot_route(route, allpoints):
         if k == route_size:
             X.append(next_point[1]) # adicionando ponto de final
             Y.append(next_point[0]) # adicionando ponto de final
-
+    X.append(allpoints["R"][1])
+    Y.append(allpoints["R"][0])
     X = np.array(X)
     Y = np.array(Y)
     return X, Y
