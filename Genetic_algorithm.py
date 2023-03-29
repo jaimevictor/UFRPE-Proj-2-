@@ -205,7 +205,7 @@ def evolution(population: list, fitness: list, func: Callable, cross_rate: float
     return new_population, new_fitness
 
 
-def AG(num_gen: int, num_individuals: int, func: Callable,
+def GA(num_gen: int, num_individuals: int, func: Callable,
        cross_rate: float, mutation_rate: float, points: dict) -> str:
     """
     :param num_gen: The number of generation to be had
@@ -214,7 +214,7 @@ def AG(num_gen: int, num_individuals: int, func: Callable,
     :param cross_rate: The probability of a crossover
     :param mutation_rate: The probability of a mutation
     :param points: A dictionary of points with their indexes
-    :return: The best route after running the AG
+    :return: The best route after running the GA
     """
     parents = first_population(points, num_individuals)  # Generate te first population
     table = caltulate_general_cost(points)  # Calculates the cost for every connection
@@ -286,7 +286,7 @@ while True:
     q_line, q_column = list(map(int, input().split()))  # Reading input
     start_time = time.time() # Start timer
     all_points = format_input(q_line)  # Get every point in the table
-    best_route = AG(num_gen=150, num_individuals=20, func=reverse_roulette,
+    best_route = GA(num_gen=150, num_individuals=20, func=reverse_roulette,
                     cross_rate=0.9, mutation_rate=0.01, points=all_points)
     print("%s seconds" % (time.time() - start_time))
     print(f'After many generations, the best route found was {best_route}')
