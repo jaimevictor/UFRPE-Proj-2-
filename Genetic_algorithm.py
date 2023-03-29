@@ -122,6 +122,7 @@ def mutation(individuals_list: List[str], mutation_rate: float) -> List[str]:
         individuals_list[i] = mutation_individual(ind, mutation_rate)
     return individuals_list
 
+
 def tournament(fitness: List[float]) -> int:
     """
     :param fitness: A list with the fitness of a population
