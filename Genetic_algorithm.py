@@ -282,11 +282,12 @@ def create_graph(route, all_points):
     plt.show()
 
 
-q_line, q_column = list(map(int, input().split()))  # Reading input
-start_time = time.time() # Start timer
-all_points = format_input(q_line)  # Get every point in the table
-best_route = AG(num_gen=150, num_individuals=20, func=reverse_roulette,
-                cross_rate=0.9, mutation_rate=0.01, points=all_points)
-print("%s seconds" % (time.time() - start_time))
-print(f'After many generations, the best route found was {best_route}')
-create_graph(best_route, all_points)
+while True:
+    q_line, q_column = list(map(int, input().split()))  # Reading input
+    start_time = time.time() # Start timer
+    all_points = format_input(q_line)  # Get every point in the table
+    best_route = AG(num_gen=150, num_individuals=20, func=reverse_roulette,
+                    cross_rate=0.9, mutation_rate=0.01, points=all_points)
+    print("%s seconds" % (time.time() - start_time))
+    print(f'After many generations, the best route found was {best_route}')
+    create_graph(best_route, all_points)
